@@ -2594,6 +2594,16 @@ input, select, textarea {
 		position: relative;
 	}
 
+	.center-image {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.center-image img {
+		margin: 0 auto;
+	}
+
 		.image img {
 			display: block;
 		}

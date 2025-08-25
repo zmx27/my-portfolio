@@ -3109,6 +3109,36 @@ input, select, textarea {
 		border-color: #eeeeee;
 	}
 
+/* Project Description */
+
+.project-description {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 2rem;
+  color: #212931;
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+
+.project-description li {
+  position: relative;
+  padding-left: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.project-description li::before {
+  content: '';
+  position: absolute;
+  left: 0.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0.9em;
+  height: 0.9em;
+  background: url('data:image/svg+xml;utf8,<svg fill="%2318bfef" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M6 4l4 4-4 4" stroke="%2318bfef" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>') no-repeat center center;
+  background-size: 0.9em 0.9em;
+  opacity: 0.8;
+}
+
 /* Pagination */
 
 	.pagination {

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>Project Three — Flappy Electron - Zhi Ming Xu</title>
+		<title>Project One — GPS Position Tracker - Zhi Ming Xu</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -27,23 +27,23 @@
 			<div id="main">
 				<section class="post">
 					<header class="major">
-						<h1>Project Three — Flappy Electron</h1>
-						<p>A Physics simulation where the movement of the "electron" is affected by the user-controlled magnitude and direction of the surrounding electric and magnetic fields.</p>
+						<h1>Project One — GPS Position Tracker</h1>
+						<p>Interfacing GY-NEO6MV2 GPS module with STM32 to get location coordinates.</p>
 					</header>
 					<div class="row">
 						<div class="col-6 col-12-small">
 							<h3>Project Overview</h3>
 							<p>
-								This project features an obstacle course that was inspired by the popular mobile game Flappy Bird.
-								The goal of the game is to get an electron through several openings in the obstacles by changing the strength 
-								and direction of the magnetic and electric fields. These are controlled by the user, so they must carefully control the electron and get it to safely 
-								pass through all the obstacles and reach the end. 
+								GPS stands for Global Position System, and it is used to detect the latitude and longitude of any location on Earth. This project utilizes a GPS module to receive 
+								the coordinates from the satellite and interfaces it with a STM32 microcontroller via the UART communication protocol. As a result, I am able to 
+								parse live location data from the GPS module and display it on a 16x2 LCD display module in the form of latitude and longitude coordinates. These coordinates also come with
+								minimal error, as the GPS module is able to provide accuracy up to 2.5 meters. This project can be used in various applications, such as vehicle tracking, navigation systems, and outdoor activities.
 							</p>
-							<h3>Live Demo</h3>
+							<h3>Live Demo (coming soon!)</h3>
 							<div class="video-container">
 								<video controls>
-									<source src="images/project3Demo.mp4" type="video/mp4">
-									<source src="images/project3Demo.mov" type="video/quicktime">
+									<source src="images/project5Demo.mp4" type="video/mp4">
+									<source src="images/project5Demo.mov" type="video/quicktime">
 									Your browser does not support the video tag.
 								</video>
 							</div>
@@ -51,23 +51,23 @@
 						<div class="col-6 col-12-small">
 							<h3>Key Features</h3>
 							<ul>
-								<li>User Input: The ‘wasd’ keys are used to control the magnetic field, while the arrow keys are used to control the electric field.</li>
-								<li>Subsequent levels will only be unlocked when prior levels are beaten.</li>
-								<li>The 'Reset', 'Pause', and 'Return to Home' buttons make for easy maneuverability.</li>
+								<li>Successfully integrated a GPS module with an STM32 microcontroller and an LCD display to create a fully functional, self-contained system.</li>
+								<li>This project utilizes the TinyGPSPlus library to simplify parsing of the NMEA data stream.</li>
+								<li>Incorporated error handling mechanisms to ensure reliable operation by checking for valid GPS data, displaying a "Waiting" message on the LCD when the signal is lost or the data stream is incomplete.</li>
 							</ul>
 						</div>
 						<section>
 							<h3>Tech Stack</h3>
 							<ul class="icons">
-								<li><span class="icon brands fa-python">Python</span></li>
-								<li><span class="icon solid fa-gamepad">Game Development</span></li>
-								<li><span class="icon solid fa-paint-brush">UI Design</span></li>
-								<li><span class="icon solid fa-atom">Web VPython</span></li>
+								<li><span class="icon solid fa-code">C</span></li>
+								<li><span class="icon solid fa-microchip">STM32 Microcontroller</span></li>
+								<li><span class="icon solid fa-exchange-alt">UART</span></li>
+								<li><span class="icon solid fa-satellite">TinyGPSPlus</span></li>
 							</ul>
 						</section>
 					</div>
 					<ul class="actions">
-						<li><a href="https://www.glowscript.org/#/user/zhin9897/folder/MyPrograms/" class="button">Source</a></li>
+						<li><a href="https://github.com/zmx27/STM32-as-GPS" class="button">Source</a></li>
 						<li><a href="index.html#projects" class="button">Back to Projects</a></li>
 					</ul>
 				</section>

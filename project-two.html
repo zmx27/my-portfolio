@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>Project Three — Flappy Electron - Zhi Ming Xu</title>
+		<title>Project Two — STM32 Environmental Monitor - Zhi Ming Xu</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -27,23 +27,23 @@
 			<div id="main">
 				<section class="post">
 					<header class="major">
-						<h1>Project Three — Flappy Electron</h1>
-						<p>A Physics simulation where the movement of the "electron" is affected by the user-controlled magnitude and direction of the surrounding electric and magnetic fields.</p>
+						<h1>Project Two - STM32 Environmental Monitor</h1>
+						<p>Interfacing the DHT11 temperature and humidity sensor with an STM32 microcontroller using HAL libraries.</p>
 					</header>
 					<div class="row">
 						<div class="col-6 col-12-small">
 							<h3>Project Overview</h3>
 							<p>
-								This project features an obstacle course that was inspired by the popular mobile game Flappy Bird.
-								The goal of the game is to get an electron through several openings in the obstacles by changing the strength 
-								and direction of the magnetic and electric fields. These are controlled by the user, so they must carefully control the electron and get it to safely 
-								pass through all the obstacles and reach the end. 
+								In this project, I crafted an embedded system in C that utilizes the STM32 HAL library to interface with a DHT11 sensor,
+								allowing for the precise measurement of temperature and humidity. The project features time-critical communication and displays real-time
+								data on an integrated LCD screen via the I2C communication protocol, serving as a functional environmental monitoring system. However, the sensor
+								does have a slight error margin of ±2°C for temperature and ±5% for humidity, which is acceptable for general monitoring purposes.
 							</p>
-							<h3>Live Demo</h3>
+							<h3>Live Demo (coming soon!)</h3>
 							<div class="video-container">
 								<video controls>
-									<source src="images/project3Demo.mp4" type="video/mp4">
-									<source src="images/project3Demo.mov" type="video/quicktime">
+									<source src="images/project5Demo.mp4" type="video/mp4">
+									<source src="images/project5Demo.mov" type="video/quicktime">
 									Your browser does not support the video tag.
 								</video>
 							</div>
@@ -51,23 +51,23 @@
 						<div class="col-6 col-12-small">
 							<h3>Key Features</h3>
 							<ul>
-								<li>User Input: The ‘wasd’ keys are used to control the magnetic field, while the arrow keys are used to control the electric field.</li>
-								<li>Subsequent levels will only be unlocked when prior levels are beaten.</li>
-								<li>The 'Reset', 'Pause', and 'Return to Home' buttons make for easy maneuverability.</li>
+								<li>The core of this project is built using the STM32 HAL (Hardware Abstraction Layer) libraries, which simplifies the communication and control of the microcontroller.</li>
+								<li>The system utilizes STM32 timers to create microsecond delays, which are critical for the time-sensitive communication protocol of the DHT11 sensor.</li>
+								<li>The project is configured to read a 40-bit data packet from the sensor, which includes humidity and temperature data, and a checksum for data validation.</li>
 							</ul>
 						</div>
 						<section>
 							<h3>Tech Stack</h3>
 							<ul class="icons">
-								<li><span class="icon brands fa-python">Python</span></li>
-								<li><span class="icon solid fa-gamepad">Game Development</span></li>
-								<li><span class="icon solid fa-paint-brush">UI Design</span></li>
-								<li><span class="icon solid fa-atom">Web VPython</span></li>
+								<li><span class="icon solid fa-cogs">C</span></li>
+								<li><span class="icon solid fa-microchip">STM32 Microcontroller</span></li>
+								<li><span class="icon solid fa-sync-alt">I2C</span></li>
+								<li><span class="icon solid fa-cubes">HAL Library</span></li>
 							</ul>
 						</section>
 					</div>
 					<ul class="actions">
-						<li><a href="https://www.glowscript.org/#/user/zhin9897/folder/MyPrograms/" class="button">Source</a></li>
+						<li><a href="https://github.com/zmx27/STM32-as-Sensor" class="button">Source</a></li>
 						<li><a href="index.html#projects" class="button">Back to Projects</a></li>
 					</ul>
 				</section>

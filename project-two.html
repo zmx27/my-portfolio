@@ -39,11 +39,11 @@
 								data on an integrated LCD screen via the I2C communication protocol, serving as a functional environmental monitoring system. However, the sensor
 								does have a slight error margin of ±2°C for temperature and ±5% for humidity, which is acceptable for general monitoring purposes.
 							</p>
-							<h3>Live Demo (coming soon!)</h3>
+							<h3>Live Demo</h3>
 							<div class="video-container">
 								<video controls>
-									<source src="images/project5Demo.mp4" type="video/mp4">
-									<source src="images/project5Demo.mov" type="video/quicktime">
+									<source src="images/project2Demo.mp4" type="video/mp4">
+									<source src="images/project2Demo.mov" type="video/quicktime">
 									Your browser does not support the video tag.
 								</video>
 							</div>
@@ -52,7 +52,7 @@
 							<h3>Key Features</h3>
 							<ul>
 								<li>The core of this project is built using the STM32 HAL (Hardware Abstraction Layer) libraries, which simplifies the communication and control of the microcontroller.</li>
-								<li>The system utilizes STM32 timers to create microsecond delays, which are critical for the time-sensitive communication protocol of the DHT11 sensor.</li>
+								<li>The system utilizes STM32 timers to create microsecond delays, which are critical for the time-sensitive communication protocol of the DHT11 sensor. Merely using standard delay functions like HAL_Delay is insufficient for this task.</li>
 								<li>The project is configured to read a 40-bit data packet from the sensor, which includes humidity and temperature data, and a checksum for data validation.</li>
 							</ul>
 						</div>

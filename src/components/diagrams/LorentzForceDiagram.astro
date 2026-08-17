@@ -1,0 +1,45 @@
+---
+---
+
+<svg viewBox="0 0 560 260" class="w-full h-auto" role="img" aria-label="Force diagram: at the initial state, the electric force and magnetic force on the electron cancel, so it travels straight">
+  <defs>
+    <marker id="lz-accent" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"></path>
+    </marker>
+    <marker id="lz-indicator" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="var(--indicator)"></path>
+    </marker>
+    <marker id="lz-neutral" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="var(--text-secondary)"></path>
+    </marker>
+  </defs>
+
+  <!-- ambient E field arrow -->
+  <line x1="380" y1="205" x2="380" y2="145" stroke="var(--indicator)" stroke-width="2" marker-end="url(#lz-indicator)"></line>
+  <text x="395" y="180" class="font-mono" font-size="13" fill="var(--indicator)">E</text>
+
+  <!-- ambient B field symbol (out of page) -->
+  <circle cx="470" cy="175" r="16" fill="none" stroke="var(--accent)" stroke-width="2"></circle>
+  <circle cx="470" cy="175" r="3.5" fill="var(--accent)"></circle>
+  <text x="470" y="212" text-anchor="middle" class="font-mono" font-size="12" fill="var(--accent)">B (out of page)</text>
+
+  <!-- electron -->
+  <circle cx="150" cy="140" r="14" fill="var(--surface-raised)" stroke="var(--text)" stroke-width="2"></circle>
+  <text x="150" y="144" text-anchor="middle" class="font-sans" font-size="12" fill="var(--text)">e−</text>
+
+  <!-- velocity -->
+  <line x1="166" y1="140" x2="228" y2="140" stroke="var(--text-secondary)" stroke-width="2" marker-end="url(#lz-neutral)"></line>
+  <text x="236" y="144" class="font-mono" font-size="13" fill="var(--text-secondary)">v</text>
+
+  <!-- electric force (down) -->
+  <line x1="150" y1="156" x2="150" y2="208" stroke="var(--indicator)" stroke-width="2" marker-end="url(#lz-indicator)"></line>
+  <text x="164" y="195" class="font-mono" font-size="12" fill="var(--indicator)">F_E</text>
+
+  <!-- magnetic force (up) -->
+  <line x1="150" y1="124" x2="150" y2="72" stroke="var(--accent)" stroke-width="2" marker-end="url(#lz-accent)"></line>
+  <text x="164" y="90" class="font-mono" font-size="12" fill="var(--accent)">F_B</text>
+
+  <text x="280" y="245" text-anchor="middle" class="font-mono" font-size="12" fill="var(--text-secondary)">
+    Initial state: F_E and F_B cancel — the electron travels straight
+  </text>
+</svg>

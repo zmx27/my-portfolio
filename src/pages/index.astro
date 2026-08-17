@@ -1,6 +1,8 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ProjectCard from "../components/ProjectCard.astro";
+import OscilloscopeTrace from "../components/OscilloscopeTrace.astro";
+import TraceDivider from "../components/TraceDivider.astro";
 import { projects } from "../data/projects";
 
 const base = import.meta.env.BASE_URL;
@@ -21,7 +23,8 @@ const skillGroups = [
     title: "Hardware & Systems",
     items: [
       "STM32 (ARM Cortex-M)", "FPGA", "UART", "I2C", "SPI", "PWM", "Single-Wire", "GPIO",
-      "Oscilloscope", "Digital Multimeter", "Function Generator", "Breadboard", "Arduino UNO",
+      "Oscilloscope", "Digital Multimeter", "Function Generator", "Raspberry Pi", "Arduino UNO", "LTspice",
+      "KiCad", "Altium Designer",
     ],
   },
 ];
@@ -78,27 +81,38 @@ const filters = [
   description="Computer Engineering student at Columbia University working across embedded systems, backend infrastructure, and applied AI."
 >
   <!-- Hero -->
-  <section class="mx-auto max-w-[1120px] px-6 pt-20 pb-16 sm:pt-28 sm:pb-24">
-    <h1 class="font-display text-4xl sm:text-5xl font-bold tracking-tight max-w-2xl">Zhi Ming Xu</h1>
-    <p class="mt-4 text-xl sm:text-2xl text-text max-w-2xl">
-      Computer Engineering student working at the intersection of hardware, software, and AI.
-    </p>
-    <p class="mt-4 text-text-secondary max-w-xl">
-      Currently looking for internship opportunities with teams doing ambitious engineering work across that stack.
-    </p>
-    <div class="mt-8 flex flex-wrap gap-4">
-      <a href={`${base}#projects`} class="rounded-md bg-accent px-5 py-2.5 font-medium text-bg hover:opacity-90 transition-opacity">
-        View Projects
-      </a>
-      <a href={`${base}#contact`} class="rounded-md border border-border px-5 py-2.5 font-medium hover:border-accent hover:text-accent transition-colors">
-        Contact Me
-      </a>
+  <section class="relative overflow-hidden">
+    <div class="mx-auto max-w-[1120px] px-6 pt-20 pb-20 sm:pt-28 sm:pb-28 grid gap-12 lg:grid-cols-[1.15fr_1fr] lg:items-center">
+      <div>
+        <p class="reveal font-mono text-xs tracking-widest uppercase text-accent mb-4">Computer Engineering · Columbia University</p>
+        <h1 class="reveal font-display font-bold tracking-tight leading-[0.95] text-[clamp(3rem,8vw,5.5rem)]">
+          Zhi Ming Xu
+        </h1>
+        <p class="reveal reveal-delay-1 mt-6 text-xl sm:text-2xl text-text max-w-xl">
+          Computer Engineering student working at the intersection of hardware, software, and AI.
+        </p>
+        <p class="reveal reveal-delay-1 mt-4 text-text-secondary max-w-lg">
+          Currently looking for internship opportunities with teams doing ambitious engineering work across that stack.
+        </p>
+        <div class="reveal reveal-delay-2 mt-8 flex flex-wrap gap-4">
+          <a href={`${base}#projects`} class="rounded-md bg-accent px-5 py-2.5 font-medium text-bg hover:opacity-90 transition-opacity">
+            View Projects
+          </a>
+          <a href={`${base}#contact`} class="rounded-md border border-border px-5 py-2.5 font-medium hover:border-accent hover:text-accent transition-colors">
+            Contact Me
+          </a>
+        </div>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <OscilloscopeTrace />
+      </div>
     </div>
   </section>
 
   <!-- About -->
-  <section id="about" class="border-t border-border">
-    <div class="mx-auto max-w-[1120px] px-6 py-16 grid gap-10 sm:grid-cols-[200px_1fr] items-start">
+  <section id="about">
+    <TraceDivider />
+    <div class="reveal mx-auto max-w-[1120px] px-6 py-16 grid gap-10 sm:grid-cols-[200px_1fr] items-start">
       <img
         src={`${base}images/headshot.jpg`}
         alt="Headshot of Zhi Ming Xu"
@@ -106,7 +120,14 @@ const filters = [
         height="200"
         class="rounded-lg object-cover w-40 h-40 sm:w-[200px] sm:h-[200px]"
       />
-      <div>
+      <div class="rounded-lg border border-border bg-surface-raised p-6">
+        <div class="flex items-center gap-2 mb-4">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
+          </span>
+          <span class="font-mono text-xs uppercase tracking-wide text-accent">Status: open to internships</span>
+        </div>
         <h2 class="font-display text-2xl font-semibold mb-4">About Me</h2>
         <p class="text-text-secondary max-w-2xl leading-relaxed">
           I'm a Computer Engineering student at Columbia University with experience across embedded systems,
@@ -119,8 +140,9 @@ const filters = [
   </section>
 
   <!-- Projects -->
-  <section id="projects" class="border-t border-border">
-    <div class="mx-auto max-w-[1120px] px-6 py-16">
+  <section id="projects">
+    <TraceDivider />
+    <div class="reveal mx-auto max-w-[1120px] px-6 py-16">
       <h2 class="font-display text-2xl font-semibold mb-2">Projects</h2>
       <p class="text-text-secondary mb-8">Selected work spanning embedded systems and software.</p>
 
@@ -146,47 +168,66 @@ const filters = [
   </section>
 
   <!-- Skills -->
-  <section id="skills" class="border-t border-border">
-    <div class="mx-auto max-w-[1120px] px-6 py-16">
+  <section id="skills">
+    <TraceDivider />
+    <div class="reveal mx-auto max-w-[1120px] px-6 py-16">
       <h2 class="font-display text-2xl font-semibold mb-8">Skills</h2>
-      <div class="grid gap-10 sm:grid-cols-3">
-        {skillGroups.map((group) => (
-          <div>
-            <h3 class="font-display text-sm font-semibold uppercase tracking-wide text-text-secondary mb-3">
-              {group.title}
-            </h3>
-            <div class="flex flex-wrap gap-2">
-              {group.items.map((item) => (
-                <span class="font-mono text-xs rounded border border-border px-2 py-1">{item}</span>
-              ))}
+      <div class="grid gap-8 sm:grid-cols-3">
+        {skillGroups.map((group, i) => {
+          const barColor = i % 2 === 0 ? "border-accent" : "border-indicator";
+          const markColor = i % 2 === 0 ? "text-accent" : "text-indicator";
+          return (
+            <div class={`border-l-2 ${barColor} pl-4`}>
+              <h3 class="font-display text-sm font-semibold uppercase tracking-wide text-text-secondary mb-3">
+                {group.title}
+              </h3>
+              <ul class="flex flex-col gap-1.5">
+                {group.items.map((item) => (
+                  <li class="font-mono text-sm">
+                    <span class={markColor}>&gt; </span>
+                    <span class="text-text-secondary">{item}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   </section>
 
   <!-- Experience -->
-  <section id="experience" class="border-t border-border">
-    <div class="mx-auto max-w-[1120px] px-6 py-16">
+  <section id="experience">
+    <TraceDivider />
+    <div class="reveal mx-auto max-w-[1120px] px-6 py-16">
       <h2 class="font-display text-2xl font-semibold mb-8">Experience & Research</h2>
-      <div class="flex flex-col gap-8">
-        {experience.map((job) => (
-          <div class="rounded-lg border border-border bg-surface p-6">
-            <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-3">
-              <h3 class="font-display text-lg font-semibold">
-                {job.role} <span class="text-text-secondary font-normal">· {job.org}</span>
-              </h3>
-              <span class="font-mono text-xs text-text-secondary shrink-0">{job.dates}</span>
+      <div class="relative pl-8">
+        <div class="absolute left-[6px] top-2 bottom-2 w-px bg-border"></div>
+        <div class="flex flex-col gap-10">
+          {experience.map((job, i) => (
+            <div class="relative">
+              <span
+                class:list={[
+                  "absolute -left-[26px] top-1.5 w-3.5 h-3.5 rounded-full border-2 bg-bg",
+                  i % 2 === 0 ? "border-accent" : "border-indicator",
+                ]}
+              ></span>
+              <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-2">
+                <h3 class="font-display text-lg font-semibold">
+                  {job.role} <span class="text-text-secondary font-normal">· {job.org}</span>
+                </h3>
+                <span class="font-mono text-xs text-text-secondary tabular-nums shrink-0">{job.dates}</span>
+              </div>
+              <ul class="list-disc pl-4 flex flex-col gap-2 text-text-secondary text-sm leading-relaxed">
+                {job.bullets.map((bullet) => <li>{bullet}</li>)}
+              </ul>
             </div>
-            <ul class="list-disc pl-4 flex flex-col gap-2 text-text-secondary text-sm leading-relaxed">
-              {job.bullets.map((bullet) => <li>{bullet}</li>)}
-            </ul>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   </section>
 
   <script src="../scripts/nav-filter.ts"></script>
+  <script src="../scripts/card-preview.ts"></script>
 </BaseLayout>

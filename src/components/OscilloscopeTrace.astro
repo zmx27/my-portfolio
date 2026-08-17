@@ -1,0 +1,60 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+---
+
+<svg
+  class={`trace-svg ${className}`}
+  viewBox="0 0 600 120"
+  fill="none"
+  preserveAspectRatio="none"
+  aria-hidden="true"
+>
+  <path
+    class="trace-path"
+    d="M0,60 C25,25 50,25 75,60 C100,95 125,95 150,60 C175,25 200,25 225,60
+       L245,60 L250,12 L258,12 L263,60
+       C288,95 313,95 338,60 C363,25 388,25 413,60 C438,95 463,95 488,60
+       C513,25 538,25 563,60 C575,45 590,50 600,60"
+    stroke="var(--accent)"
+    stroke-width="2.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    pathLength="100"
+  ></path>
+</svg>
+
+<style>
+  .trace-svg {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  .trace-path {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    animation:
+      trace-draw-in 1.4s ease-out forwards,
+      trace-idle-drift 8s ease-in-out 1.4s infinite;
+  }
+
+  @keyframes trace-draw-in {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes trace-idle-drift {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-4px);
+    }
+  }
+</style>

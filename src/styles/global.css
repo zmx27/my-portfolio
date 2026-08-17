@@ -3,9 +3,11 @@
 @theme {
   --color-bg: var(--bg);
   --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
   --color-text: var(--text);
   --color-text-secondary: var(--text-secondary);
   --color-accent: var(--accent);
+  --color-indicator: var(--indicator);
   --color-border: var(--border);
 
   --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
@@ -18,9 +20,11 @@
 :root {
   --bg: #0b0f14;
   --surface: #131a21;
+  --surface-raised: #1b242e;
   --text: #e6edf3;
   --text-secondary: #8b98a5;
   --accent: #5eead4;
+  --indicator: #f0a868;
   --border: #1e2732;
 }
 
@@ -28,9 +32,11 @@
   :root:not([data-theme="dark"]) {
     --bg: #f7f8fa;
     --surface: #ffffff;
+    --surface-raised: #eef1f4;
     --text: #12181f;
     --text-secondary: #5b6673;
     --accent: #0f766e;
+    --indicator: #b45309;
     --border: #e3e7eb;
   }
 }
@@ -38,18 +44,22 @@
 :root[data-theme="light"] {
   --bg: #f7f8fa;
   --surface: #ffffff;
+  --surface-raised: #eef1f4;
   --text: #12181f;
   --text-secondary: #5b6673;
   --accent: #0f766e;
+  --indicator: #b45309;
   --border: #e3e7eb;
 }
 
 :root[data-theme="dark"] {
   --bg: #0b0f14;
   --surface: #131a21;
+  --surface-raised: #1b242e;
   --text: #e6edf3;
   --text-secondary: #8b98a5;
   --accent: #5eead4;
+  --indicator: #f0a868;
   --border: #1e2732;
 }
 
@@ -66,4 +76,71 @@ body {
   background-color: var(--bg);
   color: var(--text);
   transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Engineering-graticule background: fixed, behind everything, drawn from the
+   same hairline border color used for card edges so it reads as texture,
+   never as a competing color. Sits behind opaque surfaces so it never
+   touches text contrast. */
+.graticule {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, var(--border) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Trace-line section divider: a dashed hairline standing in for a PCB trace. */
+.trace-line {
+  height: 1px;
+  width: 100%;
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--border) 0 6px,
+    transparent 6px 10px
+  );
+}
+
+/* Scroll-reveal: sections fade + rise once on first entering the viewport.
+   JS toggles .is-visible; reduced-motion guard below neutralizes both. */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 {
+  transition-delay: 0.12s;
+}
+
+.reveal-delay-2 {
+  transition-delay: 0.28s;
+}
+
+.reveal-delay-3 {
+  transition-delay: 0.44s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
 }

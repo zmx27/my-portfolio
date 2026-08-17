@@ -1,0 +1,82 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { projects } from "../../data/projects";
+
+export function getStaticPaths() {
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout title={`${project.title} - Zhi Ming Xu`} description={project.tagline}>
+  <article class="mx-auto max-w-[900px] px-6 py-16">
+    <a href={`${base}#projects`} class="text-sm text-accent hover:underline">&larr; Back to Projects</a>
+
+    <h1 class="font-display text-3xl sm:text-4xl font-bold tracking-tight mt-4">{project.title}</h1>
+    <p class="mt-3 text-lg text-text-secondary">{project.tagline}</p>
+
+    {project.note && (
+      <p class="mt-4 rounded-md border border-border bg-surface px-4 py-3 text-sm text-text-secondary">
+        {project.note}
+      </p>
+    )}
+
+    <div class="mt-8 grid gap-10 sm:grid-cols-2">
+      <div>
+        <h2 class="font-display text-lg font-semibold mb-3">Overview</h2>
+        <p class="text-text-secondary leading-relaxed">{project.overview}</p>
+
+        {project.video && (
+          <div class="mt-6">
+            <h2 class="font-display text-lg font-semibold mb-3">Demo</h2>
+            <video
+              controls
+              preload="none"
+              poster={`${base}${project.image.replace(/^\//, "")}`}
+              class="w-full rounded-lg border border-border"
+            >
+              <source src={`${base}${project.video.replace(/^\//, "")}`} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        )}
+      </div>
+
+      <div>
+        <h2 class="font-display text-lg font-semibold mb-3">Key Features</h2>
+        <ul class="list-disc pl-4 flex flex-col gap-3 text-text-secondary leading-relaxed">
+          {project.bullets.map((bullet) => <li>{bullet}</li>)}
+        </ul>
+
+        <h2 class="font-display text-lg font-semibold mt-6 mb-3">Tech Stack</h2>
+        <div class="flex flex-wrap gap-2">
+          {project.tags.map((tag) => (
+            <span class="font-mono text-xs rounded border border-border px-2 py-1 text-text-secondary">{tag}</span>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-10 flex gap-3">
+      <a
+        href={project.sourceUrl}
+        target="_blank"
+        rel="noreferrer"
+        class="rounded-md border border-accent px-5 py-2.5 font-medium text-accent hover:bg-accent hover:text-bg transition-colors"
+      >
+        {project.sourceLabel}
+      </a>
+      <a
+        href={`${base}#projects`}
+        class="rounded-md border border-border px-5 py-2.5 font-medium text-text-secondary hover:border-accent hover:text-accent transition-colors"
+      >
+        Back to Projects
+      </a>
+    </div>
+  </article>
+</BaseLayout>

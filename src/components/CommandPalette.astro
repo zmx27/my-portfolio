@@ -1,0 +1,74 @@
+---
+import { projects } from "../data/projects";
+
+const base = import.meta.env.BASE_URL;
+
+const sectionCommands = [
+  { label: "About", keywords: "about bio who intersection hardware software ai", href: `${base}#about`, group: "Sections" },
+  { label: "Projects", keywords: "projects work portfolio embedded software", href: `${base}#projects`, group: "Sections" },
+  { label: "Skills", keywords: "skills languages frameworks tools hardware systems", href: `${base}#skills`, group: "Sections" },
+  { label: "Experience", keywords: "experience research work history internship ibm columbia", href: `${base}#experience`, group: "Sections" },
+  { label: "Contact", keywords: "contact email message form get in touch", href: `${base}#contact`, group: "Sections" },
+];
+
+const projectCommands = projects.map((p) => ({
+  label: p.title,
+  keywords: [p.title, ...p.tags, p.category].join(" ").toLowerCase(),
+  href: `${base}projects/${p.slug}/`,
+  group: "Projects",
+}));
+
+const linkCommands = [
+  { label: "GitHub", keywords: "github code repos source zmx27", href: "https://github.com/zmx27", group: "Links", external: true },
+  { label: "LinkedIn", keywords: "linkedin professional network", href: "https://www.linkedin.com/in/zhi-ming-xu", group: "Links", external: true },
+  { label: "Download Résumé", keywords: "resume cv pdf download", href: `${base}resume.pdf`, group: "Links", external: true },
+];
+
+const commands = [...sectionCommands, ...projectCommands, ...linkCommands];
+---
+
+<div
+  id="command-palette"
+  data-commands={JSON.stringify(commands)}
+  class="fixed inset-0 z-[100]"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Command palette"
+>
+  <div id="command-palette-backdrop" class="absolute inset-0 bg-bg/80 backdrop-blur-sm"></div>
+  <div class="relative mx-auto mt-24 sm:mt-32 max-w-lg px-4">
+    <div class="rounded-lg border border-border bg-surface-raised shadow-2xl overflow-hidden">
+      <div class="flex items-center gap-2 px-4 py-3 border-b border-border">
+        <span class="font-mono text-accent" aria-hidden="true">&gt;</span>
+        <input
+          id="command-palette-input"
+          type="text"
+          placeholder="Search sections, projects, tags..."
+          autocomplete="off"
+          spellcheck="false"
+          role="combobox"
+          aria-expanded="true"
+          aria-controls="command-palette-results"
+          aria-autocomplete="list"
+          class="flex-1 bg-transparent font-mono text-sm text-text placeholder:text-text-secondary focus:outline-none"
+        />
+        <kbd class="font-mono text-xs text-text-secondary border border-border rounded px-1.5 py-0.5">Esc</kbd>
+      </div>
+      <ul id="command-palette-results" role="listbox" class="max-h-80 overflow-y-auto py-2"></ul>
+      <p id="command-palette-empty" class="hidden px-4 py-6 text-sm text-text-secondary text-center">No results</p>
+    </div>
+  </div>
+</div>
+
+<style>
+  #command-palette {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.15s ease;
+  }
+
+  #command-palette.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+</style>

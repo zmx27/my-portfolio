@@ -1,5 +1,12 @@
 export type ProjectCategory = "embedded" | "software";
 
+export interface CodeSnippet {
+  code: string;
+  lang: string;
+  filename: string;
+  description: string;
+}
+
 export interface Project {
   slug: string;
   title: string;
@@ -13,6 +20,7 @@ export interface Project {
   image: string;
   video?: string;
   note?: string;
+  codeSnippet?: CodeSnippet;
 }
 
 export const projects: Project[] = [
@@ -33,6 +41,21 @@ export const projects: Project[] = [
     sourceLabel: "Source",
     image: "/images/stm32-gps-tracker.png",
     video: "/videos/stm32-gps-tracker.mp4",
+    codeSnippet: {
+      filename: "gps.ino",
+      lang: "cpp",
+      description: "Busy-waits for the display interval while continuing to feed every incoming byte to the NMEA parser, so a slow 4-second LCD refresh never drops GPS data arriving in between.",
+      code: `static void GPSDelay(unsigned long ms)
+{
+  unsigned long start = millis();
+  do
+  {
+    // The GPS module is connected to Serial1
+    while (Serial1.available())
+      gps.encode(Serial1.read());
+  } while (millis() - start < ms);
+}`,
+    },
   },
   {
     slug: "stm32-environmental-monitor",
@@ -51,6 +74,27 @@ export const projects: Project[] = [
     sourceLabel: "Source",
     image: "/images/stm32-environmental-monitor.png",
     video: "/videos/stm32-environmental-monitor.mp4",
+    codeSnippet: {
+      filename: "main.c",
+      lang: "c",
+      description: "Bit-bangs one byte off the DHT11's single-wire line by timing how long the pin stays high after each 40µs window — no UART/SPI peripheral involved, just a hardware timer and GPIO reads.",
+      code: `uint8_t DHT11_Read (void)
+{
+	uint8_t i,j;
+	for (j=0; j<8; j++) // Reads a 8 bit data byte
+	{
+		while ((!HAL_GPIO_ReadPin(DHT11_PORT, DHT11_PIN))); // Wait for pin to go high
+		delay(40); // Wait for 40us
+		if ((!HAL_GPIO_ReadPin(DHT11_PORT, DHT11_PIN))) // Pin is low
+		{
+			i &= ~(1 << (7-j)); // Write 0 (bit at the jth position will be forced to 0 by & operator)
+		}
+		else i |= (1<< (7-j)); // Write 1 when pin is high (bit is forced to 1 by | operator)
+		while ((HAL_GPIO_ReadPin(DHT11_PORT, DHT11_PIN))); // Wait for pin to go back low
+	}
+	return i;
+}`,
+    },
   },
   {
     slug: "fruit-ninja",
@@ -69,6 +113,30 @@ export const projects: Project[] = [
     sourceLabel: "Source (with Kevin Zhou)",
     image: "/images/fruit-ninja.png",
     video: "/videos/fruit-ninja.mp4",
+    codeSnippet: {
+      filename: "FruitNinja.pde",
+      lang: "java",
+      description: "The slice check: cursor distance to the fruit's center must be inside its radius, and the cursor must have moved far enough between frames to count as a slice rather than a graze. (Trimmed — the full handler also branches on bombs, power-ups, and menu selection.)",
+      code: `void mouseDragged() {
+  for (int i = 0; i < fruitBox.size(); i++) {
+    Fruit curr = fruitBox.get(i);
+    //Slicing detection
+    if (dist(curr.getX(), curr.getY(), mouseX, mouseY) < curr.getRadius()
+      && dist(mouseX, mouseY, pmouseX, pmouseY) > curr.getRadius()/48
+      ) {
+      // ...
+
+      //slicing fruit produces two new images of sliced fruit: top and bottom
+      PImage topSprite = loadImage(fruitTop);
+      PImage bottomSprite = loadImage(fruitBottom);
+      Fruit fruit1 = new Fruit(xCoor, yCoor, 5, 0, 0.05, direction, topSprite);
+      Fruit fruit2 = new Fruit(xCoor, yCoor, -5, 0, 0.05, -direction, bottomSprite);
+      fruit1.setSliced();
+      fruit2.setSliced();
+    }
+  }
+}`,
+    },
   },
   {
     slug: "flappy-electron",
@@ -88,6 +156,22 @@ export const projects: Project[] = [
     image: "/images/flappy-electron.png",
     video: "/videos/flappy-electron.mp4",
     note: "Simulation/physics project — not a typical frontend/backend web app.",
+    codeSnippet: {
+      filename: "flappyElectron.py",
+      lang: "python",
+      description: "The two force calculations recomputed every frame: the electric force from field strength/direction, and the magnetic force via the actual v×B cross product with the electron's current velocity.",
+      code: `#positive = upwards, negative = downwards
+def eField(strength, direction):
+    field = strength*direction*e_field
+    force = -q*field
+    return force
+
+#positive = out of the page, negative = into the page
+def bField(strength, direction):
+    field = strength*direction*b_field
+    force = -q*cross(obj.vel, field)
+    return force`,
+    },
   },
 ];
 

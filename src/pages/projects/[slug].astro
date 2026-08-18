@@ -1,6 +1,10 @@
 ---
+import { Code } from "astro:components";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { projects } from "../../data/projects";
+import GpsSignalFlow from "../../components/diagrams/GpsSignalFlow.astro";
+import SensorSignalFlow from "../../components/diagrams/SensorSignalFlow.astro";
+import LorentzForceDiagram from "../../components/diagrams/LorentzForceDiagram.astro";
 
 export function getStaticPaths() {
   return projects.map((project) => ({
@@ -11,6 +15,14 @@ export function getStaticPaths() {
 
 const { project } = Astro.props;
 const base = import.meta.env.BASE_URL;
+
+const diagrams: Record<string, { component: typeof GpsSignalFlow; label: string }> = {
+  "stm32-gps-tracker": { component: GpsSignalFlow, label: "Signal Flow" },
+  "stm32-environmental-monitor": { component: SensorSignalFlow, label: "Signal Flow" },
+  "flappy-electron": { component: LorentzForceDiagram, label: "Force Diagram" },
+};
+const diagram = diagrams[project.slug];
+const DiagramComponent = diagram?.component;
 ---
 
 <BaseLayout title={`${project.title} - Zhi Ming Xu`} description={project.tagline}>
@@ -26,8 +38,8 @@ const base = import.meta.env.BASE_URL;
       </p>
     )}
 
-    <div class="mt-8 grid gap-10 sm:grid-cols-2">
-      <div>
+    <div class="mt-8 grid gap-6 sm:grid-cols-2">
+      <div class="rounded-lg border border-border bg-surface-raised p-6">
         <h2 class="font-display text-lg font-semibold mb-3">Overview</h2>
         <p class="text-text-secondary leading-relaxed">{project.overview}</p>
 
@@ -47,7 +59,7 @@ const base = import.meta.env.BASE_URL;
         )}
       </div>
 
-      <div>
+      <div class="rounded-lg border border-border bg-surface-raised p-6">
         <h2 class="font-display text-lg font-semibold mb-3">Key Features</h2>
         <ul class="list-disc pl-4 flex flex-col gap-3 text-text-secondary leading-relaxed">
           {project.bullets.map((bullet) => <li>{bullet}</li>)}
@@ -61,6 +73,26 @@ const base = import.meta.env.BASE_URL;
         </div>
       </div>
     </div>
+
+    {diagram && DiagramComponent && (
+      <div class="mt-6 rounded-lg border border-border bg-surface-raised p-6">
+        <h2 class="font-display text-lg font-semibold mb-4">{diagram.label}</h2>
+        <DiagramComponent />
+      </div>
+    )}
+
+    {project.codeSnippet && (
+      <div class="mt-6 rounded-lg border border-border bg-surface-raised p-6">
+        <div class="flex items-baseline justify-between gap-3 mb-3">
+          <h2 class="font-display text-lg font-semibold">Source Excerpt</h2>
+          <span class="font-mono text-xs text-text-secondary">{project.codeSnippet.filename}</span>
+        </div>
+        <p class="text-text-secondary text-sm leading-relaxed mb-4">{project.codeSnippet.description}</p>
+        <div class="rounded-md overflow-hidden text-sm [&_pre]:p-4 [&_pre]:overflow-x-auto">
+          <Code code={project.codeSnippet.code} lang={project.codeSnippet.lang as any} theme="github-dark-default" />
+        </div>
+      </div>
+    )}
 
     <div class="mt-10 flex gap-3">
       <a

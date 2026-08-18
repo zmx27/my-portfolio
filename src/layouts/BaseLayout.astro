@@ -1,6 +1,7 @@
 ---
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import CommandPalette from "../components/CommandPalette.astro";
 import "../styles/global.css";
 
 interface Props {
@@ -51,10 +52,14 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
     </script>
   </head>
   <body class="font-sans bg-bg text-text min-h-screen flex flex-col">
+    <div class="graticule" aria-hidden="true"></div>
     <Header />
     <main class="flex-1">
       <slot />
     </main>
     <Footer />
+    <CommandPalette />
+    <script src="../scripts/scroll-reveal.ts"></script>
+    <script src="../scripts/command-palette.ts"></script>
   </body>
 </html>

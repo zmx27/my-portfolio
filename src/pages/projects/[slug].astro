@@ -1,4 +1,5 @@
 ---
+import { Code } from "astro:components";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { projects } from "../../data/projects";
 import GpsSignalFlow from "../../components/diagrams/GpsSignalFlow.astro";
@@ -77,6 +78,19 @@ const DiagramComponent = diagram?.component;
       <div class="mt-6 rounded-lg border border-border bg-surface-raised p-6">
         <h2 class="font-display text-lg font-semibold mb-4">{diagram.label}</h2>
         <DiagramComponent />
+      </div>
+    )}
+
+    {project.codeSnippet && (
+      <div class="mt-6 rounded-lg border border-border bg-surface-raised p-6">
+        <div class="flex items-baseline justify-between gap-3 mb-3">
+          <h2 class="font-display text-lg font-semibold">Source Excerpt</h2>
+          <span class="font-mono text-xs text-text-secondary">{project.codeSnippet.filename}</span>
+        </div>
+        <p class="text-text-secondary text-sm leading-relaxed mb-4">{project.codeSnippet.description}</p>
+        <div class="rounded-md overflow-hidden text-sm [&_pre]:p-4 [&_pre]:overflow-x-auto">
+          <Code code={project.codeSnippet.code} lang={project.codeSnippet.lang as any} theme="github-dark-default" />
+        </div>
       </div>
     )}
 

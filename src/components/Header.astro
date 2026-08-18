@@ -26,10 +26,11 @@ const navLinks = [
         id="command-palette-trigger"
         type="button"
         aria-label="Open command palette"
-        class="hidden sm:flex items-center gap-1.5 rounded-md border border-border px-2.5 py-1.5 text-xs font-mono text-text-secondary hover:border-accent hover:text-accent transition-colors cursor-pointer"
+        class="command-trigger-pulse flex items-center gap-1.5 rounded-md border border-accent/50 bg-accent/5 px-2.5 py-1.5 text-xs font-mono text-accent hover:bg-accent/10 hover:border-accent transition-colors cursor-pointer"
       >
         <span aria-hidden="true">&gt;_</span>
-        <kbd class="border border-border rounded px-1 py-0.5 text-[10px]">⌘K</kbd>
+        <span class="hidden sm:inline text-text-secondary">Search</span>
+        <kbd class="hidden sm:inline border border-accent/40 rounded px-1 py-0.5 text-[10px]">⌘K</kbd>
       </button>
       <a href="https://github.com/zmx27" aria-label="GitHub" target="_blank" rel="noreferrer" class="text-text-secondary hover:text-accent transition-colors">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -100,3 +101,23 @@ const navLinks = [
     navToggle.setAttribute("aria-expanded", String(!isHidden));
   });
 </script>
+
+<style>
+  /* Draws the eye to the palette trigger once per page load, then stops. */
+  .command-trigger-pulse {
+    animation: trigger-pulse 1.6s ease-out 1;
+    animation-delay: 1s;
+  }
+
+  @keyframes trigger-pulse {
+    0% {
+      box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 45%, transparent);
+    }
+    70% {
+      box-shadow: 0 0 0 8px color-mix(in srgb, var(--accent) 0%, transparent);
+    }
+    100% {
+      box-shadow: 0 0 0 0 transparent;
+    }
+  }
+</style>

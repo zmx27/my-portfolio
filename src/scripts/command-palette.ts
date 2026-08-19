@@ -129,7 +129,7 @@ if (root && input && resultsEl && emptyEl) {
       e.preventDefault();
       close();
     } else if (e.key === "Tab") {
-      // Only one focusable control while open (the input) — keep focus put.
+      // Only one focusable control while open (the input), so just keep focus there.
       e.preventDefault();
     }
   });

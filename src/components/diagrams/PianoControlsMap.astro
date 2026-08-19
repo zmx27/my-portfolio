@@ -1,51 +1,48 @@
 ---
 const notes = ["C", "D", "E", "F", "G", "A", "B"];
-const switchX = (i: number) => 20 + i * 86;
+const switchX = (i: number) => 60 + i * 100;
 
-const modifiers = [
-  { label: "PB1", effect: "flat (−1)" },
-  { label: "PB2", effect: "sharp (+1)" },
-  { label: "PB3", effect: "octave bit" },
+const buttons = [
+  { label: "PB0", fn: "Reset" },
+  { label: "PB1", fn: "Flat" },
+  { label: "PB2", fn: "Sharp" },
+  { label: "PB3", fn: "Octave" },
 ];
-const modX = (i: number) => 150 + i * 190;
+const btnX = (i: number) => 545 + i * 70;
 ---
 
-<svg viewBox="0 0 720 300" class="w-full h-auto" role="img" aria-label="Controls map: eight switches select a natural note one-hot, three pushbuttons apply flat, sharp, and octave modifiers, feeding a 5-bit encoded note">
-  <defs>
-    <marker id="pcm-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"></path>
-    </marker>
-  </defs>
+<svg viewBox="0 0 820 400" class="w-full h-auto" role="img" aria-label="Simplified board layout: the seven-segment display sits at bottom left, push buttons at bottom right, and the note switches run along the bottom edge">
+  <!-- board outline -->
+  <rect x="20" y="20" width="780" height="340" rx="24" fill="var(--surface-raised)" stroke="var(--border)" stroke-width="2"></rect>
 
-  <text x="20" y="20" class="font-mono" font-size="11" fill="var(--text-secondary)">SWITCHES · one-hot, natural note select</text>
+  <!-- chip, just for context -->
+  <rect x="370" y="55" width="90" height="55" rx="6" fill="var(--bg)" stroke="var(--border)"></rect>
+  <text x="415" y="87" text-anchor="middle" class="font-mono" font-size="11" fill="var(--text-secondary)">FPGA</text>
 
+  <!-- 7-segment display, bottom left -->
+  <rect x="60" y="170" width="220" height="80" rx="12" fill="var(--bg)" stroke="var(--accent)" stroke-width="2"></rect>
+  {[0, 1, 2, 3].map((i) => (
+    <rect x={80 + i * 48} y="192" width="30" height="36" rx="3" fill="none" stroke="var(--accent)" stroke-width="1.5" opacity="0.8"></rect>
+  ))}
+  <text x="170" y="272" text-anchor="middle" class="font-sans" font-size="13" font-weight="600" fill="var(--text)">7-Segment Display</text>
+  <text x="170" y="289" text-anchor="middle" class="font-mono" font-size="11" fill="var(--text-secondary)">shows the current note</text>
+
+  <!-- push buttons, bottom right -->
+  <text x="650" y="165" text-anchor="middle" class="font-mono" font-size="11" fill="var(--text-secondary)">PUSH BUTTONS</text>
+  {buttons.map((btn, i) => (
+    <>
+      <circle cx={btnX(i)} cy="205" r="22" fill="var(--bg)" stroke="var(--indicator)" stroke-width="2"></circle>
+      <text x={btnX(i)} y="210" text-anchor="middle" class="font-mono" font-size="11" font-weight="600" fill="var(--indicator)">{btn.label}</text>
+      <text x={btnX(i)} y="245" text-anchor="middle" class="font-sans" font-size="11" fill="var(--text-secondary)">{btn.fn}</text>
+    </>
+  ))}
+
+  <!-- switches, along the bottom edge -->
+  <text x="60" y="308" class="font-mono" font-size="11" fill="var(--text-secondary)">SWITCHES · flip one to pick a note</text>
   {notes.map((note, i) => (
     <>
-      <rect x={switchX(i)} y="28" width="72" height="40" rx="6" fill="var(--surface-raised)" stroke="var(--border)"></rect>
-      <text x={switchX(i) + 36} y="53" text-anchor="middle" class="font-sans" font-size="16" font-weight="700" fill="var(--text)">{note}</text>
+      <rect x={switchX(i)} y="315" width="70" height="34" rx="6" fill="var(--bg)" stroke="var(--border)"></rect>
+      <text x={switchX(i) + 35} y="337" text-anchor="middle" class="font-sans" font-size="15" font-weight="700" fill="var(--text)">{note}</text>
     </>
   ))}
-
-  <text x="20" y="118" class="font-mono" font-size="11" fill="var(--text-secondary)">PUSHBUTTONS · modifiers</text>
-
-  {modifiers.map((mod, i) => (
-    <>
-      <circle cx={modX(i)} cy="150" r="26" fill="var(--surface-raised)" stroke="var(--indicator)" stroke-width="2"></circle>
-      <text x={modX(i)} y="155" text-anchor="middle" class="font-mono" font-size="13" font-weight="600" fill="var(--indicator)">{mod.label}</text>
-      <text x={modX(i)} y="192" text-anchor="middle" class="font-mono" font-size="11" fill="var(--text-secondary)">{mod.effect}</text>
-    </>
-  ))}
-
-  <!-- collector brackets: gather each whole row before converging on the output -->
-  <line x1="20" y1="80" x2="608" y2="80" stroke="var(--accent)" stroke-width="1.5" opacity="0.5"></line>
-  <line x1="245" y1="80" x2="245" y2="210" stroke="var(--accent)" stroke-width="1.5" opacity="0.5"></line>
-  <line x1="245" y1="210" x2="355" y2="233" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#pcm-arrow)"></line>
-
-  <line x1="124" y1="188" x2="556" y2="188" stroke="var(--indicator)" stroke-width="1.5" opacity="0.5"></line>
-  <line x1="340" y1="188" x2="340" y2="210" stroke="var(--indicator)" stroke-width="1.5" opacity="0.5"></line>
-  <line x1="340" y1="210" x2="405" y2="233" stroke="var(--indicator)" stroke-width="1.5" marker-end="url(#pcm-arrow)"></line>
-
-  <rect x="260" y="235" width="240" height="50" rx="8" fill="var(--surface-raised)" stroke="var(--accent)"></rect>
-  <text x="380" y="257" text-anchor="middle" class="font-mono" font-size="12" font-weight="600" fill="var(--text)">note_next (5-bit)</text>
-  <text x="380" y="274" text-anchor="middle" class="font-mono" font-size="10" fill="var(--text-secondary)">→ note_gen.vhd lookup</text>
 </svg>

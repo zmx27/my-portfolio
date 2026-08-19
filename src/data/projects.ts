@@ -173,6 +173,47 @@ def bField(strength, direction):
     return force`,
     },
   },
+  {
+    slug: "fpga-audio-synthesizer",
+    title: "FPGA Digital Audio Synthesizer",
+    tagline: "A hardware synthesizer and automated player piano built entirely in VHDL on a Xilinx Artix-7 FPGA.",
+    category: "embedded",
+    overview:
+      "A two-phase FPGA project: a manual electric piano that drives a piezo speaker directly from cascaded hardware clock dividers, then extended into an automated \"player piano\" that sequences a 32-beat rendition of \"Mary Had a Little Lamb\" from a hardware finite-state machine — no microprocessor anywhere in the signal path.",
+    bullets: [
+      "Built a chain of custom loadable clock-divider components in VHDL (clk_dvd.vhd) to derive precise note frequencies from the Basys 3's 100MHz system clock, routed through a Mixed-Mode Clock Manager (MMCME2_BASE) and Xilinx global clock buffers for deskew.",
+      "Designed a note-lookup ROM and a time-multiplexed 4-digit 7-segment display driver as synchronous VHDL processes; divider constants were pre-computed with a small Perl script rather than hand-calculated.",
+      "Extended the manual piano into an automated player piano: a tempo generator and 32-step sequencer (a hardware FSM, not a microprocessor) step through a hard-coded \"Mary Had a Little Lamb,\" muting each note for the final 20% of its beat window so repeated notes don't bleed into one continuous tone.",
+    ],
+    tags: ["VHDL", "Xilinx Artix-7", "Vivado", "Clock Dividers", "FSM"],
+    sourceUrl: "https://github.com/zmx27/FPGA-Audio-Synthesizer",
+    sourceLabel: "Source",
+    image: "/images/fpga-audio-synthesizer.jpg",
+    video: "/videos/fpga-audio-synthesizer.mp4",
+    codeSnippet: {
+      filename: "piano_auto.vhd",
+      lang: "vhdl",
+      description: "The articulation fix: without this, two consecutive beats on the same note play as one continuous tone. Muting the output for the last 20% of every beat window recreates the gap of a real key-release.",
+      code: `audio_output:
+process (CLK,RST) begin
+    if (RST = '1') then
+        note_next <= (others => '0');
+    elsif (CLK'event and CLK = '1') then
+        if (playing = '1') then
+            -- Articulation: Create a small gap of silence between beats
+            if (beat_counter > 4000) then
+                note_next <= "00000";   -- Mute for the last 20% of the beat
+            else
+                note_next <= auto_note; -- Play the note from the ROM
+            end if;
+        else
+            -- If we haven't pressed Play yet, remain completely silent
+            note_next <= "00000";
+        end if;
+    end if;
+end process;`,
+    },
+  },
 ];
 
 export function getProject(slug: string): Project | undefined {

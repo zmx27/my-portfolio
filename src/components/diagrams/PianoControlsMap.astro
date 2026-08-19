@@ -1,0 +1,51 @@
+---
+const notes = ["C", "D", "E", "F", "G", "A", "B"];
+const switchX = (i: number) => 20 + i * 86;
+
+const modifiers = [
+  { label: "PB1", effect: "flat (−1)" },
+  { label: "PB2", effect: "sharp (+1)" },
+  { label: "PB3", effect: "octave bit" },
+];
+const modX = (i: number) => 150 + i * 190;
+---
+
+<svg viewBox="0 0 720 300" class="w-full h-auto" role="img" aria-label="Controls map: eight switches select a natural note one-hot, three pushbuttons apply flat, sharp, and octave modifiers, feeding a 5-bit encoded note">
+  <defs>
+    <marker id="pcm-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"></path>
+    </marker>
+  </defs>
+
+  <text x="20" y="20" class="font-mono" font-size="11" fill="var(--text-secondary)">SWITCHES · one-hot, natural note select</text>
+
+  {notes.map((note, i) => (
+    <>
+      <rect x={switchX(i)} y="28" width="72" height="40" rx="6" fill="var(--surface-raised)" stroke="var(--border)"></rect>
+      <text x={switchX(i) + 36} y="53" text-anchor="middle" class="font-sans" font-size="16" font-weight="700" fill="var(--text)">{note}</text>
+    </>
+  ))}
+
+  <text x="20" y="118" class="font-mono" font-size="11" fill="var(--text-secondary)">PUSHBUTTONS · modifiers</text>
+
+  {modifiers.map((mod, i) => (
+    <>
+      <circle cx={modX(i)} cy="150" r="26" fill="var(--surface-raised)" stroke="var(--indicator)" stroke-width="2"></circle>
+      <text x={modX(i)} y="155" text-anchor="middle" class="font-mono" font-size="13" font-weight="600" fill="var(--indicator)">{mod.label}</text>
+      <text x={modX(i)} y="192" text-anchor="middle" class="font-mono" font-size="11" fill="var(--text-secondary)">{mod.effect}</text>
+    </>
+  ))}
+
+  <!-- collector brackets: gather each whole row before converging on the output -->
+  <line x1="20" y1="80" x2="608" y2="80" stroke="var(--accent)" stroke-width="1.5" opacity="0.5"></line>
+  <line x1="245" y1="80" x2="245" y2="210" stroke="var(--accent)" stroke-width="1.5" opacity="0.5"></line>
+  <line x1="245" y1="210" x2="355" y2="233" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#pcm-arrow)"></line>
+
+  <line x1="124" y1="188" x2="556" y2="188" stroke="var(--indicator)" stroke-width="1.5" opacity="0.5"></line>
+  <line x1="340" y1="188" x2="340" y2="210" stroke="var(--indicator)" stroke-width="1.5" opacity="0.5"></line>
+  <line x1="340" y1="210" x2="405" y2="233" stroke="var(--indicator)" stroke-width="1.5" marker-end="url(#pcm-arrow)"></line>
+
+  <rect x="260" y="235" width="240" height="50" rx="8" fill="var(--surface-raised)" stroke="var(--accent)"></rect>
+  <text x="380" y="257" text-anchor="middle" class="font-mono" font-size="12" font-weight="600" fill="var(--text)">note_next (5-bit)</text>
+  <text x="380" y="274" text-anchor="middle" class="font-mono" font-size="10" fill="var(--text-secondary)">→ note_gen.vhd lookup</text>
+</svg>

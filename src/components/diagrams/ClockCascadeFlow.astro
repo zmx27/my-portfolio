@@ -1,0 +1,37 @@
+---
+---
+
+<svg viewBox="0 0 800 260" class="w-full h-auto" role="img" aria-label="Clock cascade: 100MHz system clock divides to a 1MHz strobe, which enables two parallel dividers driving the speaker frequency and the 7-segment scan rate">
+  <defs>
+    <marker id="ccf-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"></path>
+    </marker>
+  </defs>
+
+  <!-- nodes -->
+  <rect x="10" y="90" width="150" height="60" rx="8" fill="var(--surface-raised)" stroke="var(--border)"></rect>
+  <text x="85" y="115" text-anchor="middle" class="font-sans" font-size="12" font-weight="600" fill="var(--text)">100MHz Clock</text>
+  <text x="85" y="132" text-anchor="middle" class="font-mono" font-size="10" fill="var(--text-secondary)">MMCM + BUFG</text>
+
+  <rect x="230" y="90" width="160" height="60" rx="8" fill="var(--surface-raised)" stroke="var(--accent)"></rect>
+  <text x="310" y="112" text-anchor="middle" class="font-sans" font-size="12" font-weight="600" fill="var(--text)">clk_dvd ÷50</text>
+  <text x="310" y="130" text-anchor="middle" class="font-mono" font-size="10" fill="var(--text-secondary)">1MHz enable strobe</text>
+
+  <rect x="470" y="20" width="170" height="55" rx="8" fill="var(--surface-raised)" stroke="var(--indicator)"></rect>
+  <text x="555" y="41" text-anchor="middle" class="font-sans" font-size="12" font-weight="600" fill="var(--text)">clk_dvd ÷note</text>
+  <text x="555" y="58" text-anchor="middle" class="font-mono" font-size="10" fill="var(--text-secondary)">note_gen.vhd lookup</text>
+
+  <rect x="470" y="165" width="170" height="55" rx="8" fill="var(--surface-raised)" stroke="var(--indicator)"></rect>
+  <text x="555" y="186" text-anchor="middle" class="font-sans" font-size="12" font-weight="600" fill="var(--text)">clk_dvd ÷50</text>
+  <text x="555" y="203" text-anchor="middle" class="font-mono" font-size="10" fill="var(--text-secondary)">10kHz scan rate</text>
+
+  <text x="668" y="52" text-anchor="start" class="font-mono" font-size="12" fill="var(--accent)">Speaker</text>
+  <text x="668" y="197" text-anchor="start" class="font-mono" font-size="12" fill="var(--accent)">7-Seg Display</text>
+
+  <!-- arrows -->
+  <line x1="160" y1="120" x2="225" y2="120" stroke="var(--accent)" stroke-width="2" marker-end="url(#ccf-arrow)"></line>
+  <path d="M390,110 C420,90 440,60 465,48" fill="none" stroke="var(--accent)" stroke-width="2" marker-end="url(#ccf-arrow)"></path>
+  <path d="M390,130 C420,150 440,180 465,192" fill="none" stroke="var(--accent)" stroke-width="2" marker-end="url(#ccf-arrow)"></path>
+  <line x1="640" y1="48" x2="663" y2="48" stroke="var(--indicator)" stroke-width="2" marker-end="url(#ccf-arrow)"></line>
+  <line x1="640" y1="192" x2="663" y2="192" stroke="var(--indicator)" stroke-width="2" marker-end="url(#ccf-arrow)"></line>
+</svg>

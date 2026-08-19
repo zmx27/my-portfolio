@@ -5,6 +5,8 @@ import { projects } from "../../data/projects";
 import GpsSignalFlow from "../../components/diagrams/GpsSignalFlow.astro";
 import SensorSignalFlow from "../../components/diagrams/SensorSignalFlow.astro";
 import LorentzForceDiagram from "../../components/diagrams/LorentzForceDiagram.astro";
+import PianoControlsMap from "../../components/diagrams/PianoControlsMap.astro";
+import ClockCascadeFlow from "../../components/diagrams/ClockCascadeFlow.astro";
 
 export function getStaticPaths() {
   return projects.map((project) => ({
@@ -20,6 +22,7 @@ const diagrams: Record<string, { component: typeof GpsSignalFlow; label: string 
   "stm32-gps-tracker": { component: GpsSignalFlow, label: "Signal Flow" },
   "stm32-environmental-monitor": { component: SensorSignalFlow, label: "Signal Flow" },
   "flappy-electron": { component: LorentzForceDiagram, label: "Force Diagram" },
+  "fpga-audio-synthesizer": { component: PianoControlsMap, label: "Controls Map" },
 };
 const diagram = diagrams[project.slug];
 const DiagramComponent = diagram?.component;
@@ -78,6 +81,13 @@ const DiagramComponent = diagram?.component;
       <div class="mt-6 rounded-lg border border-border bg-surface-raised p-6">
         <h2 class="font-display text-lg font-semibold mb-4">{diagram.label}</h2>
         <DiagramComponent />
+      </div>
+    )}
+
+    {project.slug === "fpga-audio-synthesizer" && (
+      <div class="mt-6 rounded-lg border border-border bg-surface-raised p-6">
+        <h2 class="font-display text-lg font-semibold mb-4">Clock Cascade</h2>
+        <ClockCascadeFlow />
       </div>
     )}
 

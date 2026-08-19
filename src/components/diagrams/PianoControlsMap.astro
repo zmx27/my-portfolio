@@ -1,0 +1,62 @@
+---
+const notes = ["C", "D", "E", "F", "G", "A", "B"];
+const switchX = (i: number) => 60 + i * 100;
+
+const buttons = [
+  { label: "PB0", fn: "Reset" },
+  { label: "PB1", fn: "Flat" },
+  { label: "PB2", fn: "Sharp" },
+  { label: "PB3", fn: "Octave" },
+];
+const btnX = (i: number) => 545 + i * 70;
+---
+
+<div>
+  <p class="text-text-secondary text-sm leading-relaxed mb-5">
+    This is a simplified layout of the actual board. The switches, buttons, and display are physical
+    hardware, and the VHDL code is what decides what each one does.
+  </p>
+
+  <svg viewBox="0 0 820 420" class="w-full h-auto" role="img" aria-label="Simplified physical layout of the Basys 3 board: the seven-segment display sits at bottom left, push buttons at bottom right, and the note switches run along the bottom edge">
+    <!-- board outline, styled like a physical device being inspected -->
+    <rect x="20" y="20" width="780" height="340" rx="24" fill="var(--surface-raised)" stroke="var(--border)" stroke-width="2"></rect>
+    <g stroke="var(--accent)" stroke-width="2.5" fill="none">
+      <path d="M20,50 L20,26 Q20,20 26,20 L50,20"></path>
+      <path d="M770,20 L794,20 Q800,20 800,26 L800,50"></path>
+      <path d="M800,330 L800,354 Q800,360 794,360 L770,360"></path>
+      <path d="M50,360 L26,360 Q20,360 20,354 L20,330"></path>
+    </g>
+    <text x="40" y="44" class="font-mono" font-size="11" font-weight="600" fill="var(--accent)">BASYS 3 BOARD</text>
+
+    <!-- chip, just for context -->
+    <rect x="370" y="65" width="90" height="55" rx="6" fill="var(--bg)" stroke="var(--border)"></rect>
+    <text x="415" y="97" text-anchor="middle" class="font-mono" font-size="11" fill="var(--text-secondary)">FPGA</text>
+
+    <!-- 7-segment display, bottom left -->
+    <rect x="60" y="180" width="220" height="80" rx="12" fill="var(--bg)" stroke="var(--accent)" stroke-width="2"></rect>
+    {[0, 1, 2, 3].map((i) => (
+      <rect x={80 + i * 48} y="202" width="30" height="36" rx="3" fill="none" stroke="var(--accent)" stroke-width="1.5" opacity="0.8"></rect>
+    ))}
+    <text x="170" y="282" text-anchor="middle" class="font-sans" font-size="13" font-weight="600" fill="var(--text)">7-Segment Display</text>
+    <text x="170" y="299" text-anchor="middle" class="font-mono" font-size="11" fill="var(--text-secondary)">shows the current note</text>
+
+    <!-- push buttons, bottom right -->
+    <text x="650" y="175" text-anchor="middle" class="font-mono" font-size="11" fill="var(--text-secondary)">PUSH BUTTONS</text>
+    {buttons.map((btn, i) => (
+      <>
+        <circle cx={btnX(i)} cy="215" r="22" fill="var(--bg)" stroke="var(--indicator)" stroke-width="2"></circle>
+        <text x={btnX(i)} y="220" text-anchor="middle" class="font-mono" font-size="11" font-weight="600" fill="var(--indicator)">{btn.label}</text>
+        <text x={btnX(i)} y="255" text-anchor="middle" class="font-sans" font-size="11" fill="var(--text-secondary)">{btn.fn}</text>
+      </>
+    ))}
+
+    <!-- switches, along the bottom edge -->
+    <text x="60" y="318" class="font-mono" font-size="11" fill="var(--text-secondary)">SWITCHES · flip one to pick a note</text>
+    {notes.map((note, i) => (
+      <>
+        <rect x={switchX(i)} y="325" width="70" height="34" rx="6" fill="var(--bg)" stroke="var(--border)"></rect>
+        <text x={switchX(i) + 35} y="347" text-anchor="middle" class="font-sans" font-size="15" font-weight="700" fill="var(--text)">{note}</text>
+      </>
+    ))}
+  </svg>
+</div>
